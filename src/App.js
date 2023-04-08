@@ -13,7 +13,6 @@ const App = () => {
   const [manualClickUpgrade, setManualClickUpgrade] = useState(() => {
     return parseInt(localStorage.getItem('manualClickUpgrade')) || 0;
   });
-
   const [manualClickUpgradeCost, setManualClickUpgradeCost] = useState(() => {
     return parseInt(localStorage.getItem('manualClickUpgradeCost')) || 1000;
   });
@@ -23,23 +22,18 @@ const App = () => {
   const [clicks, setClicks] = useState(() => {
     return parseInt(localStorage.getItem('clicks')) || 0;
   });
-
   const [autoClicks, setAutoClicks] = useState(() => {
     return parseInt(localStorage.getItem('autoClicks')) || 0;
   });
-
   const [autoClickCost, setAutoClickCost] = useState(() => {
     return parseInt(localStorage.getItem('autoClickCost')) || 15;
   });
-
   const [autoClickMultiplier, setAutoClickMultiplier] = useState(() => {
     return parseInt(localStorage.getItem('autoClickMultiplier')) || 1;
   });
-
   const [autoClickMultiplierCost, setAutoClickMultiplierCost] = useState(() => {
     return parseInt(localStorage.getItem('autoClickMultiplierCost')) || 500;
   });
-
   const [nextAutoClickMultiplierBreakpoint, setNextAutoClickMultiplierBreakpoint] = useState(() => {
     return parseInt(localStorage.getItem('nextAutoClickMultiplierBreakpoint')) || 2;
   });
@@ -49,19 +43,15 @@ const App = () => {
   const [factories, setFactories] = useState(() => {
     return parseInt(localStorage.getItem('factories')) || 0;
   });
-
   const [factoriesCost, setFactoriesCost] = useState(() => {
     return parseInt(localStorage.getItem('factoriesCost')) || 45;
   });
-
   const [factoriesMultiplier, setFactoriesMultiplier] = useState(() => {
     return parseInt(localStorage.getItem('factoriesMultiplier')) || 1;
   });
-
   const [factoriesMultiplierCost, setFactoriesMultiplierCost] = useState(() => {
     return parseInt(localStorage.getItem('factoriesMultiplierCost')) || 1500;
   });
-
   const [nextFactoriesMultiplierBreakpoint, setNextFactoriesMultiplierBreakpoint] = useState(() => {
     return parseInt(localStorage.getItem('nextFactoriesMultiplierBreakpoint')) || 2;
   });
@@ -71,19 +61,15 @@ const App = () => {
   const [clickPlants, setClickPlants] = useState(() => {
     return parseInt(localStorage.getItem('clickPlants')) || 0;
   });
-
   const [clickPlantsCost, setClickPlantsCost] = useState(() => {
     return parseInt(localStorage.getItem('clickPlantsCost')) || 150;
   });
-
   const [clickPlantsMultiplier, setClickPlantsMultiplier] = useState(() => {
     return parseInt(localStorage.getItem('clickPlantsMultiplier')) || 1;
   });
-
   const [clickPlantsMultiplierCost, setClickPlantsMultiplierCost] = useState(() => {
     return parseInt(localStorage.getItem('clickPlantsMultiplierCost')) || 5000;
   });
-
   const [nextClickPlantsMultiplierBreakpoint, setNextClickPlantsMultiplierBreakpoint] = useState(() => {
     return parseInt(localStorage.getItem('nextClickPlantsMultiplierBreakpoint')) || 2;
   });
@@ -93,19 +79,15 @@ const App = () => {
   const [clickPortals, setClickPortals] = useState(() => {
     return parseInt(localStorage.getItem('clickPortals')) || 0;
   });
-
   const [clickPortalsCost, setClickPortalsCost] = useState(() => {
     return parseInt(localStorage.getItem('clickPortalsCost')) || 1500;
   });
-
   const [clickPortalsMultiplier, setClickPortalsMultiplier] = useState(() => {
     return parseInt(localStorage.getItem('clickPortalsMultiplier')) || 1;
   });
-
   const [clickPortalsMultiplierCost, setClickPortalsMultiplierCost] = useState(() => {
     return parseInt(localStorage.getItem('clickPortalsMultiplierCost')) || 50000;
   });
-
   const [nextClickPortalsMultiplierBreakpoint, setNextClickPortalsMultiplierBreakpoint] = useState(() => {
     return parseInt(localStorage.getItem('nextClickPortalsMultiplierBreakpoint')) || 2;
   });
@@ -288,7 +270,10 @@ const App = () => {
     <div>
       <h1>Bedi Clicker</h1>
       <div>clicks: {clicks}</div>
-      <div>clicks per sec {(autoClicks * autoClickMultiplier) + (factories * factoriesMultiplier * 3) + (clickPlants * clickPlantsMultiplier * 10) + (clickPortals * clickPortalsMultiplier * 100)}</div><br></br>
+      <div>
+        clicks per sec {(autoClicks * autoClickMultiplier) + (factories * factoriesMultiplier * 3) + (clickPlants * clickPlantsMultiplier * 10) + (clickPortals * clickPortalsMultiplier * 100)}
+      </div>
+      <br></br>
 
       <button onClick={handleClick}>Click me</button><br></br>
       <button onClick={cheatClick}>Dev click</button><br></br>
@@ -301,27 +286,27 @@ const App = () => {
 
       <button
         onClick={buyAutoClickMultiplier}
-        disabled={autoClicks < nextAutoClickMultiplierBreakpoint}
+        disabled={autoClicks < nextAutoClickMultiplierBreakpoint || clicks < autoClickMultiplierCost}
       >
         Upgrade autoclick multiplier - {autoClickMultiplier} | cost: {autoClickMultiplierCost}
       </button>
       <button
         onClick={buyFactoryMultiplier}
-        disabled={factories < nextFactoriesMultiplierBreakpoint}
+        disabled={factories < nextFactoriesMultiplierBreakpoint || clicks < factoriesMultiplierCost}
       >
         Upgrade factories multiplier - {factoriesMultiplier} | cost: {factoriesMultiplierCost}
       </button>
 
       <button
         onClick={buyClickPlantMultiplier}
-        disabled={clickPlants < nextClickPlantsMultiplierBreakpoint}
+        disabled={clickPlants < nextClickPlantsMultiplierBreakpoint || clicks < clickPlantsMultiplierCost}
       >
         Upgrade click-plants multiplier - {clickPlantsMultiplier} | cost: {clickPlantsMultiplierCost}
       </button>
 
       <button
         onClick={buyClickPortalMultiplier}
-        disabled={clickPortals < nextClickPortalsMultiplierBreakpoint}
+        disabled={clickPortals < nextClickPortalsMultiplierBreakpoint || clicks < clickPortalsMultiplierCost}
       >
         Upgrade click-portals multiplier - {clickPortalsMultiplier} | cost: {clickPortalsMultiplierCost}
       </button>
