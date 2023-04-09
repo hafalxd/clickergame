@@ -1,99 +1,129 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import useInterval from '@use-it/interval';
+import Modal from 'react-modal';
+import constants from './constants.json';
 
 import './App.css';
+
 
 const App = () => {
 
   // Local Storage
 
+  const [clicks, setClicks] = useState(() => {
+    return parseInt(localStorage.getItem('clicks')) || constants.initialClicks;
+  });
+  const [totalClicks, setTotalClicks] = useState(() => {
+    return parseInt(localStorage.getItem('totalClicks')) || constants.initialTotalClicks;
+  });
+  const [totalManualClicks, setTotalManualClicks] = useState(() => {
+    return parseInt(localStorage.getItem('totalManualClicks')) || constants.initialTotalManualClicks;
+  });
+
   // Manual clicks
 
   const [manualClickUpgrade, setManualClickUpgrade] = useState(() => {
-    return parseInt(localStorage.getItem('manualClickUpgrade')) || 0;
+    return parseInt(localStorage.getItem('manualClickUpgrade')) || constants.initialManualClickUpgrade;
   });
   const [manualClickUpgradeCost, setManualClickUpgradeCost] = useState(() => {
-    return parseInt(localStorage.getItem('manualClickUpgradeCost')) || 1000;
+    return parseInt(localStorage.getItem('manualClickUpgradeCost')) || constants.initialManualClickUpgradeCost;
   });
 
   // Auto clicks
 
-  const [clicks, setClicks] = useState(() => {
-    return parseInt(localStorage.getItem('clicks')) || 0;
-  });
   const [autoClicks, setAutoClicks] = useState(() => {
-    return parseInt(localStorage.getItem('autoClicks')) || 0;
+    return parseInt(localStorage.getItem('autoClicks')) || constants.initialAutoClicks;
   });
   const [autoClickCost, setAutoClickCost] = useState(() => {
-    return parseInt(localStorage.getItem('autoClickCost')) || 15;
+    return parseInt(localStorage.getItem('autoClickCost')) || constants.initialAutoClickCost;
   });
   const [autoClickMultiplier, setAutoClickMultiplier] = useState(() => {
-    return parseInt(localStorage.getItem('autoClickMultiplier')) || 1;
+    return parseInt(localStorage.getItem('autoClickMultiplier')) || constants.initialAutoClickMultiplier;
   });
   const [autoClickMultiplierCost, setAutoClickMultiplierCost] = useState(() => {
-    return parseInt(localStorage.getItem('autoClickMultiplierCost')) || 500;
+    return parseInt(localStorage.getItem('autoClickMultiplierCost')) || constants.initialAutoClickMultiplierCost;
   });
   const [nextAutoClickMultiplierBreakpoint, setNextAutoClickMultiplierBreakpoint] = useState(() => {
-    return parseInt(localStorage.getItem('nextAutoClickMultiplierBreakpoint')) || 2;
+    return parseInt(localStorage.getItem('nextAutoClickMultiplierBreakpoint')) || constants.initialNextAutoClickMultiplierBreakpoint;
   });
 
   // Factories
 
   const [factories, setFactories] = useState(() => {
-    return parseInt(localStorage.getItem('factories')) || 0;
+    return parseInt(localStorage.getItem('factories')) || constants.initialFactories;
   });
   const [factoriesCost, setFactoriesCost] = useState(() => {
-    return parseInt(localStorage.getItem('factoriesCost')) || 45;
+    return parseInt(localStorage.getItem('factoriesCost')) || constants.initialFactoriesCost;
   });
   const [factoriesMultiplier, setFactoriesMultiplier] = useState(() => {
-    return parseInt(localStorage.getItem('factoriesMultiplier')) || 1;
+    return parseInt(localStorage.getItem('factoriesMultiplier')) || constants.initialFactoriesMultiplier;
   });
   const [factoriesMultiplierCost, setFactoriesMultiplierCost] = useState(() => {
-    return parseInt(localStorage.getItem('factoriesMultiplierCost')) || 1500;
+    return parseInt(localStorage.getItem('factoriesMultiplierCost')) || constants.initialFactoriesMultiplierCost;
   });
   const [nextFactoriesMultiplierBreakpoint, setNextFactoriesMultiplierBreakpoint] = useState(() => {
-    return parseInt(localStorage.getItem('nextFactoriesMultiplierBreakpoint')) || 2;
+    return parseInt(localStorage.getItem('nextFactoriesMultiplierBreakpoint')) || constants.initialNextFactoriesMultiplierBreakpoint;
   });
 
   //click-plants
 
   const [clickPlants, setClickPlants] = useState(() => {
-    return parseInt(localStorage.getItem('clickPlants')) || 0;
+    return parseInt(localStorage.getItem('clickPlants')) || constants.initialClickPlants;
   });
   const [clickPlantsCost, setClickPlantsCost] = useState(() => {
-    return parseInt(localStorage.getItem('clickPlantsCost')) || 150;
+    return parseInt(localStorage.getItem('clickPlantsCost')) || constants.initialClickPlantsCost;
   });
   const [clickPlantsMultiplier, setClickPlantsMultiplier] = useState(() => {
-    return parseInt(localStorage.getItem('clickPlantsMultiplier')) || 1;
+    return parseInt(localStorage.getItem('clickPlantsMultiplier')) || constants.initialClickPlantsMultiplier;
   });
   const [clickPlantsMultiplierCost, setClickPlantsMultiplierCost] = useState(() => {
-    return parseInt(localStorage.getItem('clickPlantsMultiplierCost')) || 5000;
+    return parseInt(localStorage.getItem('clickPlantsMultiplierCost')) || constants.initialClickPlantsMultiplierCost;
   });
   const [nextClickPlantsMultiplierBreakpoint, setNextClickPlantsMultiplierBreakpoint] = useState(() => {
-    return parseInt(localStorage.getItem('nextClickPlantsMultiplierBreakpoint')) || 2;
+    return parseInt(localStorage.getItem('nextClickPlantsMultiplierBreakpoint')) || constants.initialNextClickPlantsMultiplierBreakpoint;
   });
 
   // click-portals
 
   const [clickPortals, setClickPortals] = useState(() => {
-    return parseInt(localStorage.getItem('clickPortals')) || 0;
+    return parseInt(localStorage.getItem('clickPortals')) || constants.initialClickPortals;
   });
   const [clickPortalsCost, setClickPortalsCost] = useState(() => {
-    return parseInt(localStorage.getItem('clickPortalsCost')) || 1500;
+    return parseInt(localStorage.getItem('clickPortalsCost')) || constants.initialClickPortalsCost;
   });
   const [clickPortalsMultiplier, setClickPortalsMultiplier] = useState(() => {
-    return parseInt(localStorage.getItem('clickPortalsMultiplier')) || 1;
+    return parseInt(localStorage.getItem('clickPortalsMultiplier')) || constants.initialClickPortalsMultiplier;
   });
   const [clickPortalsMultiplierCost, setClickPortalsMultiplierCost] = useState(() => {
-    return parseInt(localStorage.getItem('clickPortalsMultiplierCost')) || 50000;
+    return parseInt(localStorage.getItem('clickPortalsMultiplierCost')) || constants.initialClickPortalsMultiplierCost;
   });
   const [nextClickPortalsMultiplierBreakpoint, setNextClickPortalsMultiplierBreakpoint] = useState(() => {
-    return parseInt(localStorage.getItem('nextClickPortalsMultiplierBreakpoint')) || 2;
+    return parseInt(localStorage.getItem('nextClickPortalsMultiplierBreakpoint')) || constants.initialNextClickPortalsMultiplierBreakpoint;
+  });
+
+  // click-space-stations
+
+  const [clickSpaceStations, setClickSpaceStations] = useState(() => {
+    return parseInt(localStorage.getItem('clickSpaceStations')) || constants.initialClickSpaceStations;
+  });
+  const [clickSpaceStationCost, setClickSpaceStationCost] = useState(() => {
+    return parseInt(localStorage.getItem('clickSpaceStationCost')) || constants.initialClickSpaceStationCost;
+  });
+  const [clickSpaceStationMultiplier, setClickSpaceStationMultiplier] = useState(() => {
+    return parseInt(localStorage.getItem('clickSpaceStationMultiplier')) || constants.initialClickSpaceStationMultiplier;
+  });
+  const [clickSpaceStationMultiplierCost, setClickSpaceStationMultiplierCost] = useState(() => {
+    return parseInt(localStorage.getItem('clickSpaceStationMultiplierCost')) || constants.initialClickSpaceStationMultiplierCost;
+  });
+  const [nextClickSpaceStationMultiplierBreakpoint, setNextClickSpaceStationMultiplierBreakpoint] = useState(() => {
+    return parseInt(localStorage.getItem('nextClickSpaceStationMultiplierBreakpoint')) || constants.initialNextClickSpaceStationMultiplierBreakpoint;
   });
 
   useEffect(() => {
     localStorage.setItem('clicks', clicks);
+    localStorage.setItem('totalClicks', totalClicks);
+    localStorage.setItem('totalManualClicks', totalManualClicks);
 
     localStorage.setItem('manualClickUpgrade', manualClickUpgrade);
     localStorage.setItem('manualClickUpgradeCost', manualClickUpgradeCost);
@@ -122,16 +152,28 @@ const App = () => {
     localStorage.setItem('clickPortalsMultiplierCost', clickPortalsMultiplierCost);
     localStorage.setItem('nextClickPortalsMultiplierBreakpoint', nextClickPortalsMultiplierBreakpoint);
 
-  }, [clicks, autoClicks, autoClickCost, autoClickMultiplier, autoClickMultiplierCost, nextAutoClickMultiplierBreakpoint, factories, factoriesCost, factoriesMultiplier,
+    localStorage.setItem('clickSpaceStations', clickSpaceStations);
+    localStorage.setItem('clickSpaceStationCost', clickSpaceStationCost);
+    localStorage.setItem('clickSpaceStationMultiplier', clickSpaceStationMultiplier);
+    localStorage.setItem('clickSpaceStationMultiplierCost', clickSpaceStationMultiplierCost);
+    localStorage.setItem('nextClickSpaceStationMultiplierBreakpoint', nextClickSpaceStationMultiplierBreakpoint);
+
+  }, [clicks, totalClicks, totalManualClicks, autoClicks, autoClickCost, autoClickMultiplier, autoClickMultiplierCost, nextAutoClickMultiplierBreakpoint, factories, factoriesCost, factoriesMultiplier,
     factoriesMultiplierCost, nextFactoriesMultiplierBreakpoint, clickPlants, clickPlantsCost, clickPlantsMultiplier, clickPlantsMultiplierCost,
     nextClickPlantsMultiplierBreakpoint, manualClickUpgrade, manualClickUpgradeCost, clickPortals, clickPortalsCost, clickPortalsMultiplier, clickPortalsMultiplierCost,
-    nextClickPortalsMultiplierBreakpoint]);
+    nextClickPortalsMultiplierBreakpoint, clickSpaceStations, clickSpaceStationCost, clickSpaceStationMultiplier, clickSpaceStationMultiplierCost, nextClickSpaceStationMultiplierBreakpoint]);
 
   // Functions
 
+  const calculateManualClickValue = () => {
+    return Math.round(0.1 * ((autoClicks * autoClickMultiplier) + (factories * factoriesMultiplier * constants.factoryProduction) + (clickPlants * clickPlantsMultiplier * constants.clickPlantProduction) + (clickPortals * clickPortalsMultiplier * constants.clickPortalProduction) + (clickSpaceStations * clickSpaceStationMultiplier * constants.clickSpaceStationProdcution))) * manualClickUpgrade;
+  };
+
   const handleClick = () => {
-    const manualClickValue = Math.round(0.1 * ((autoClicks * autoClickMultiplier) + (factories * factoriesMultiplier * 3) + (clickPlants * clickPlantsMultiplier * 10) + (clickPortals * clickPortalsMultiplier * 100))) * manualClickUpgrade;
+    const manualClickValue = calculateManualClickValue();
     setClicks(clicks + 1 + manualClickValue);
+    setTotalManualClicks(totalManualClicks + 1);
+    setTotalClicks(totalClicks + 1 + manualClickValue)
   };
 
   const cheatClick = () => {
@@ -139,50 +181,61 @@ const App = () => {
   };
 
   useInterval(() => {
-    setClicks(clicks + (autoClicks * autoClickMultiplier) + (factories * factoriesMultiplier * 3) + (clickPlants * clickPlantsMultiplier * 10) + (clickPortals * clickPortalsMultiplier * 100));
+    setClicks(clicks + (autoClicks * autoClickMultiplier) + (factories * factoriesMultiplier * constants.factoryProduction) + (clickPlants * clickPlantsMultiplier * constants.clickPlantProduction) + (clickPortals * clickPortalsMultiplier * constants.clickPortalProduction) + (clickSpaceStations * clickSpaceStationMultiplier * constants.clickSpaceStationProdcution));
+  }, 1000);
+
+  useInterval(() => {
+    setTotalClicks(totalClicks + (autoClicks * autoClickMultiplier) + (factories * factoriesMultiplier * constants.factoryProduction) + (clickPlants * clickPlantsMultiplier * constants.clickPlantProduction) + (clickPortals * clickPortalsMultiplier * constants.clickPortalProduction) + (clickSpaceStations * clickSpaceStationMultiplier * constants.clickSpaceStationProdcution));
   }, 1000);
 
   // Resets
 
   const quickReset = () => {
-    setClicks(0);
 
-    setManualClickUpgrade(0);
-    setManualClickUpgradeCost(1000);
+    setClicks(constants.initialClicks);
+    setTotalClicks(constants.initialTotalClicks);
+    setTotalManualClicks(constants.initialTotalManualClicks);
 
-    setAutoClicks(0);
-    setAutoClickCost(15);
-    setAutoClickMultiplier(1);
-    setAutoClickMultiplierCost(500);
-    setNextAutoClickMultiplierBreakpoint(2);
+    setManualClickUpgrade(constants.initialManualClickUpgrade);
+    setManualClickUpgradeCost(constants.initialManualClickUpgradeCost);
 
-    setFactories(0);
-    setFactoriesCost(45);
-    setFactoriesMultiplier(1);
-    setFactoriesMultiplierCost(1500);
-    setNextFactoriesMultiplierBreakpoint(2);
+    setAutoClicks(constants.initialAutoClicks);
+    setAutoClickCost(constants.initialAutoClickCost);
+    setAutoClickMultiplier(constants.initialAutoClickMultiplier);
+    setAutoClickMultiplierCost(constants.initialAutoClickMultiplierCost);
+    setNextAutoClickMultiplierBreakpoint(constants.initialNextAutoClickMultiplierBreakpoint);
 
-    setClickPlants(0);
-    setClickPlantsCost(150);
-    setClickPlantsMultiplier(1);
-    setClickPlantsMultiplierCost(5000);
-    setNextClickPlantsMultiplierBreakpoint(2);
+    setFactories(constants.initialFactories);
+    setFactoriesCost(constants.initialFactoriesCost);
+    setFactoriesMultiplier(constants.initialFactoriesMultiplier);
+    setFactoriesMultiplierCost(constants.initialFactoriesMultiplierCost);
+    setNextFactoriesMultiplierBreakpoint(constants.initialNextFactoriesMultiplierBreakpoint);
 
-    setClickPortals(0);
-    setClickPortalsCost(1500);
-    setClickPortalsMultiplier(1);
-    setClickPortalsMultiplierCost(50000);
-    setNextClickPortalsMultiplierBreakpoint(2);
+    setClickPlants(constants.initialClickPlants);
+    setClickPlantsCost(constants.initialClickPlantsCost);
+    setClickPlantsMultiplier(constants.initialClickPlantsMultiplier);
+    setClickPlantsMultiplierCost(constants.initialClickPlantsMultiplierCost);
+    setNextClickPlantsMultiplierBreakpoint(constants.initialNextClickPlantsMultiplierBreakpoint);
+
+    setClickPortals(constants.initialClickPortals);
+    setClickPortalsCost(constants.initialClickPortalsCost);
+    setClickPortalsMultiplier(constants.initialClickPortalsMultiplier);
+    setClickPortalsMultiplierCost(constants.initialClickPortalsMultiplierCost);
+    setNextClickPortalsMultiplierBreakpoint(constants.initialNextClickPortalsMultiplierBreakpoint);
+
+    setClickSpaceStations(constants.initialClickSpaceStations);
+    setClickSpaceStationCost(constants.initialClickSpaceStationCost);
+    setClickSpaceStationMultiplier(constants.initialClickSpaceStationMultiplier);
+    setClickSpaceStationMultiplierCost(constants.initialClickSpaceStationMultiplierCost);
+    setNextClickSpaceStationMultiplierBreakpoint(constants.initialNextClickSpaceStationMultiplierBreakpoint);
 
   };
 
   const hardReset = () => {
-    if (window.confirm('Are you sure you want to reset?')) {
-      quickReset();
-      localStorage.removeItem('clicks');
-      localStorage.removeItem('autoClicks');
-      localStorage.removeItem('factories');
-    }
+    quickReset();
+    localStorage.removeItem('clicks');
+    localStorage.removeItem('autoClicks');
+    localStorage.removeItem('factories');
   };
 
   // Upgrade Purchase
@@ -263,6 +316,42 @@ const App = () => {
     }
   };
 
+  const buyClickSpaceStationUpgrade = () => {
+    if (clicks >= clickSpaceStationCost) {
+      setClicks(clicks - clickSpaceStationCost);
+      setClickSpaceStations(clickSpaceStations + 1);
+      setClickSpaceStationCost(Math.round(clickSpaceStationCost * 1.25));
+    }
+  };
+
+  const buyClickSpaceStationMultiplier = () => {
+    if (clicks >= clickSpaceStationMultiplierCost && clickSpaceStations >= nextClickSpaceStationMultiplierBreakpoint) {
+      setClicks(clicks - clickSpaceStationMultiplierCost);
+      setClickSpaceStationMultiplier(clickSpaceStationMultiplier + 1);
+      setClickSpaceStationMultiplierCost(Math.round(clickSpaceStationMultiplierCost * 1.5));
+      setNextClickSpaceStationMultiplierBreakpoint(nextClickSpaceStationMultiplierBreakpoint * 4);
+    }
+  };
+
+  // Achievements TODO
+
+  // User Interface functions
+
+  const [showStats, setShowStats] = useState(true);
+  const [showResetModal, setShowResetModal] = useState(false);
+
+  const openResetModal = () => {
+    setShowResetModal(true);
+  };
+
+  const closeResetModal = () => {
+    setShowResetModal(false);
+  };
+
+  const confirmHardReset = () => {
+    hardReset();
+    closeResetModal();
+  };
 
   // JSX
 
@@ -271,8 +360,9 @@ const App = () => {
       <h1>Bedi Clicker</h1>
       <div>clicks: {clicks}</div>
       <div>
-        clicks per sec {(autoClicks * autoClickMultiplier) + (factories * factoriesMultiplier * 3) + (clickPlants * clickPlantsMultiplier * 10) + (clickPortals * clickPortalsMultiplier * 100)}
+        clicks per sec {(autoClicks * autoClickMultiplier) + (factories * factoriesMultiplier * constants.factoryProduction) + (clickPlants * clickPlantsMultiplier * constants.clickPlantProduction) + (clickPortals * clickPortalsMultiplier * constants.clickPortalProduction) + (clickSpaceStations * clickSpaceStationMultiplier * constants.clickSpaceStationProdcution)}
       </div>
+
       <br></br>
 
       <button onClick={handleClick}>Click me</button><br></br>
@@ -281,6 +371,7 @@ const App = () => {
       <button onClick={buyFactoryUpgrade} disabled={clicks < factoriesCost}>Buy factory - {factories} | cost: {factoriesCost}</button>
       <button onClick={buyClickPlantUpgrade} disabled={clicks < clickPlantsCost}>Buy click-plant - {clickPlants} | cost: {clickPlantsCost}</button>
       <button onClick={buyClickPortalUpgrade} disabled={clicks < clickPortalsCost}>Buy click-portal - {clickPortals} | cost: {clickPortalsCost}</button>
+      <button onClick={buyClickSpaceStationUpgrade} disabled={clicks < clickSpaceStationCost}>Buy click space-station - {clickSpaceStations} | cost: {clickSpaceStationCost}</button>
 
       <br></br>
 
@@ -310,12 +401,52 @@ const App = () => {
       >
         Upgrade click-portals multiplier - {clickPortalsMultiplier} | cost: {clickPortalsMultiplierCost}
       </button>
+
+      <button
+        onClick={buyClickSpaceStationMultiplier}
+        disabled={clickSpaceStations < nextClickSpaceStationMultiplierBreakpoint || clicks < clickSpaceStationMultiplierCost}
+      >
+        Upgrade click-space-station multiplier - {clickSpaceStationMultiplier} | cost: {clickSpaceStationMultiplierCost}
+      </button>
       <br></br>
       <button onClick={buyManualClickUpgrade} disabled={clicks < manualClickUpgradeCost}>Manual click value - {manualClickUpgrade * 10 + '%'} | cost: {manualClickUpgradeCost}</button>
 
       <br></br><br></br>
       <button onClick={quickReset}>dev reset</button>
-      <button onClick={hardReset}>hard reset</button>
+      <button onClick={openResetModal}>Hard Reset</button>
+      <Modal
+        isOpen={showResetModal}
+        onRequestClose={closeResetModal}
+        contentLabel="Hard Reset Modal"
+      >
+        <h2>Are you sure you want to hard reset?</h2>
+        <button onClick={confirmHardReset}>Yes, hard reset</button>
+        <button onClick={closeResetModal}>No, go back</button>
+      </Modal>
+
+      <br></br><br></br>
+
+      <div>
+        <button onClick={() => setShowStats(!showStats)}>
+          {showStats ? 'Hide Statistics' : 'Show Statistics'}
+        </button>
+        {showStats && (
+          <div>
+            <h2>Statistics</h2>
+            <div>Total historical clicks: {totalClicks}</div>
+            <div>Total manual clicks: {totalManualClicks}</div>
+            <div>Manual click value: {1 + calculateManualClickValue()}</div>
+            <br></br>
+
+            <div>Auto-clicks production: {autoClicks * autoClickMultiplier}</div>
+            <div>Click-Factories production: {factories * factoriesMultiplier * constants.factoryProduction}</div>
+            <div>Click-Plants production: {clickPlants * clickPlantsMultiplier * constants.clickPlantProduction}</div>
+            <div>Click-Portals production: {clickPortals * clickPortalsMultiplier * constants.clickPortalProduction}</div>
+            <div>Click Space-Stations production: {clickSpaceStations * clickSpaceStationMultiplier * constants.clickSpaceStationProdcution}</div>
+          </div>
+        )}
+      </div>
+
     </div>
   );
 };
