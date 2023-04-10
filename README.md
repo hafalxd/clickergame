@@ -63,7 +63,7 @@ This project uses the following dependencies:
 
 ## App Structure
 
-The main component of the app is App, which is a functional component that utilizes React Hooks for managing state and side effects.
+The main component of the application is App.js, which is a functional component that utilizes React Hooks for managing state and side effects.
 
 The app's state includes:
 
