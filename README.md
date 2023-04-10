@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+# Simple Clicker Web App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a simple clicker web app created using React. The app allows users to generate clicks and purchase various upgrades to increase the number of clicks produced automatically or through manual interaction. The app utilizes localStorage to persist user progress, even when the browser is closed.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Generate clicks by pressing the 'Click me' button.
+- Purchase various upgrades to increase click generation:
+  - Auto-click upgrades
+  - Factory upgrades
+  - Click-plant upgrades
+  - Click-portal upgrades
+  - Click-space-station upgrades
+- Increase the efficiency of the upgrades by purchasing multipliers.
+- Save user progress in localStorage for persistence between sessions.
+- Perform a quick reset or a hard reset to start over.
 
-### `npm start`
+## Constants and Configuration
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+To reduce the need for hardcoding and to have all values in one place for ease of change if necessary, all constants are held in a separate JSON file. This approach enables easy management and modification of configuration values, such as costs, multipliers, and other settings, without having to search through the entire codebase.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technologies Used
 
-### `npm test`
+This project was created using the following technologies:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React: A JavaScript library for building user interfaces.
+- Create React App: A toolchain for setting up a React project without manual configuration.
+- JavaScript (ES6+): The programming language used for creating the app logic.
+- HTML5 and CSS3: Used for creating the structure and styling of the app.
 
-### `npm run build`
+## Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To use the Simple Clicker Web App, you need to have Node.js installed. Follow these steps to get started:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone this repository
+```bash
+git clone https://github.com/hafalxd/clickergame.git
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Navigate to the project directory
+```bash
+cd clickergame
+```
 
-### `npm run eject`
+3. Install the required dependencies
+```bash
+npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. Start the development server
+```bash
+npm start
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5. Open your web browser and visit http://localhost:3000 to use the Simple Clicker Web App.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Dependencies
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+This project uses the following dependencies:
 
-## Learn More
+- React: A JavaScript library for building user interfaces.
+- @use-it/interval: A React Hook for using setInterval in function components.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## App Structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The main component of the app is App, which is a functional component that utilizes React Hooks for managing state and side effects.
 
-### Code Splitting
+The app's state includes:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Manual click upgrades and costs
+- Auto-clicks, costs, and multipliers
+- Factories, costs, and multipliers
+- Click-plants, costs, and multipliers
+- Click-portals, costs, and multipliers
 
-### Analyzing the Bundle Size
+The app utilizes useEffect to sync the state with localStorage and useInterval for managing the automatic click generation.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Various functions are defined for handling user interaction and purchasing upgrades. The functions are attached to buttons in the JSX, which are displayed to the user.
 
-### Making a Progressive Web App
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Feel free to submit a pull request if you would like to contribute to the project. If you find any issues or have suggestions, please create a new issue.
 
-### Advanced Configuration
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+This project is open-source and available under the MIT License.
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+
+
+
