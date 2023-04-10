@@ -6,8 +6,18 @@ import constants from './constants.json';
 
 import './App.css';
 
+// TODO:
+// Meaningful Resets and Prestige points
+// Achievements
+
 
 const App = () => {
+
+  // Calculating offline clicks
+
+  const [lastOnlineTimestamp, setLastOnlineTimestamp] = useState(() => {
+    return parseInt(localStorage.getItem('lastOnlineTimestamp')) || Date.now();
+  });
 
   // Local Storage
 
@@ -121,6 +131,7 @@ const App = () => {
   });
 
   useEffect(() => {
+    localStorage.setItem('lastOnlineTimestamp', Date.now());
     localStorage.setItem('clicks', clicks);
     localStorage.setItem('totalClicks', totalClicks);
     localStorage.setItem('totalManualClicks', totalManualClicks);
@@ -165,8 +176,16 @@ const App = () => {
 
   // Functions
 
+  const timeSinceLastOnline = Date.now() - lastOnlineTimestamp;
+  const clicksPerSecond = (autoClicks * autoClickMultiplier) + (factories * factoriesMultiplier * constants.factoryProduction) + (clickPlants * clickPlantsMultiplier * constants.clickPlantProduction) + (clickPortals * clickPortalsMultiplier * constants.clickPortalProduction) + (clickSpaceStations * clickSpaceStationMultiplier * constants.clickSpaceStationProdcution);
+  const offlineGeneratedClicks = Math.round(timeSinceLastOnline / 1000 * clicksPerSecond);
+
+  useEffect(() => {
+    setClicks(clicks + offlineGeneratedClicks);
+  }, []);
+
   const calculateManualClickValue = () => {
-    return Math.round(0.1 * ((autoClicks * autoClickMultiplier) + (factories * factoriesMultiplier * constants.factoryProduction) + (clickPlants * clickPlantsMultiplier * constants.clickPlantProduction) + (clickPortals * clickPortalsMultiplier * constants.clickPortalProduction) + (clickSpaceStations * clickSpaceStationMultiplier * constants.clickSpaceStationProdcution))) * manualClickUpgrade;
+    return Math.round(0.1 * clicksPerSecond) * manualClickUpgrade;
   };
 
   const handleClick = () => {
@@ -181,11 +200,11 @@ const App = () => {
   };
 
   useInterval(() => {
-    setClicks(clicks + (autoClicks * autoClickMultiplier) + (factories * factoriesMultiplier * constants.factoryProduction) + (clickPlants * clickPlantsMultiplier * constants.clickPlantProduction) + (clickPortals * clickPortalsMultiplier * constants.clickPortalProduction) + (clickSpaceStations * clickSpaceStationMultiplier * constants.clickSpaceStationProdcution));
+    setClicks(clicks + clicksPerSecond);
   }, 1000);
 
   useInterval(() => {
-    setTotalClicks(totalClicks + (autoClicks * autoClickMultiplier) + (factories * factoriesMultiplier * constants.factoryProduction) + (clickPlants * clickPlantsMultiplier * constants.clickPlantProduction) + (clickPortals * clickPortalsMultiplier * constants.clickPortalProduction) + (clickSpaceStations * clickSpaceStationMultiplier * constants.clickSpaceStationProdcution));
+    setTotalClicks(totalClicks + clicksPerSecond);
   }, 1000);
 
   // Resets
@@ -229,6 +248,8 @@ const App = () => {
     setClickSpaceStationMultiplierCost(constants.initialClickSpaceStationMultiplierCost);
     setNextClickSpaceStationMultiplierBreakpoint(constants.initialNextClickSpaceStationMultiplierBreakpoint);
 
+    setLastOnlineTimestamp(Date.now());
+
   };
 
   const hardReset = () => {
@@ -244,7 +265,7 @@ const App = () => {
     if (clicks >= autoClickCost) {
       setClicks(clicks - autoClickCost);
       setAutoClicks(autoClicks + 1);
-      setAutoClickCost(Math.round(autoClickCost * 1.25));
+      setAutoClickCost(Math.round(autoClickCost * constants.autoClickCostScaling));
     }
   };
 
@@ -252,8 +273,8 @@ const App = () => {
     if (clicks >= autoClickMultiplierCost && autoClicks >= nextAutoClickMultiplierBreakpoint) {
       setClicks(clicks - autoClickMultiplierCost);
       setAutoClickMultiplier(autoClickMultiplier + 1);
-      setAutoClickMultiplierCost(Math.round(autoClickMultiplierCost * 1.5));
-      setNextAutoClickMultiplierBreakpoint(nextAutoClickMultiplierBreakpoint * 4);
+      setAutoClickMultiplierCost(Math.round(autoClickMultiplierCost * constants.autoClickCostMultiplierScaling));
+      setNextAutoClickMultiplierBreakpoint(nextAutoClickMultiplierBreakpoint * constants.nextAutoClickMultiplierBreakpointScaling);
     }
   };
 
@@ -261,7 +282,7 @@ const App = () => {
     if (clicks >= factoriesCost) {
       setClicks(clicks - factoriesCost);
       setFactories(factories + 1);
-      setFactoriesCost(Math.round(factoriesCost * 1.25));
+      setFactoriesCost(Math.round(factoriesCost * constants.factoriesCostScaling));
     }
   };
 
@@ -269,8 +290,8 @@ const App = () => {
     if (clicks >= factoriesMultiplierCost && factories >= nextFactoriesMultiplierBreakpoint) {
       setClicks(clicks - factoriesMultiplierCost);
       setFactoriesMultiplier(factoriesMultiplier + 1);
-      setFactoriesMultiplierCost(Math.round(factoriesMultiplierCost * 1.5));
-      setNextFactoriesMultiplierBreakpoint(nextFactoriesMultiplierBreakpoint * 4);
+      setFactoriesMultiplierCost(Math.round(factoriesMultiplierCost * constants.factoriesMultiplierCostScaling));
+      setNextFactoriesMultiplierBreakpoint(nextFactoriesMultiplierBreakpoint * constants.nextFactoriesMultiplierBreakpointScaling);
     }
   };
 
@@ -278,7 +299,7 @@ const App = () => {
     if (clicks >= clickPlantsCost) {
       setClicks(clicks - clickPlantsCost);
       setClickPlants(clickPlants + 1);
-      setClickPlantsCost(Math.round(clickPlantsCost * 1.25));
+      setClickPlantsCost(Math.round(clickPlantsCost * constants.clickPlantsCostScaling));
     }
   };
 
@@ -286,8 +307,8 @@ const App = () => {
     if (clicks >= clickPlantsMultiplierCost && clickPlants >= nextClickPlantsMultiplierBreakpoint) {
       setClicks(clicks - clickPlantsMultiplierCost);
       setClickPlantsMultiplier(clickPlantsMultiplier + 1);
-      setClickPlantsMultiplierCost(Math.round(clickPlantsMultiplierCost * 1.5));
-      setNextClickPlantsMultiplierBreakpoint(nextClickPlantsMultiplierBreakpoint * 4);
+      setClickPlantsMultiplierCost(Math.round(clickPlantsMultiplierCost * constants.clickPlantsMultiplierCostScaling));
+      setNextClickPlantsMultiplierBreakpoint(nextClickPlantsMultiplierBreakpoint * constants.nextClickPlantsMultiplierBreakpointScaling);
     }
   };
 
@@ -295,7 +316,7 @@ const App = () => {
     if (clicks >= manualClickUpgradeCost) {
       setClicks(clicks - manualClickUpgradeCost);
       setManualClickUpgrade(manualClickUpgrade + 1);
-      setManualClickUpgradeCost(Math.round(manualClickUpgradeCost * 10));
+      setManualClickUpgradeCost(Math.round(manualClickUpgradeCost * constants.manualClickUpgradeCostScaling));
     }
   };
 
@@ -303,7 +324,7 @@ const App = () => {
     if (clicks >= clickPortalsCost) {
       setClicks(clicks - clickPortalsCost);
       setClickPortals(clickPortals + 1);
-      setClickPortalsCost(Math.round(clickPortalsCost * 1.25));
+      setClickPortalsCost(Math.round(clickPortalsCost * constants.clickPortalsCostScaling));
     }
   };
 
@@ -311,8 +332,8 @@ const App = () => {
     if (clicks >= clickPortalsMultiplierCost && clickPortals >= nextClickPortalsMultiplierBreakpoint) {
       setClicks(clicks - clickPortalsMultiplierCost);
       setClickPortalsMultiplier(clickPortalsMultiplier + 1);
-      setClickPortalsMultiplierCost(Math.round(clickPortalsMultiplierCost * 1.5));
-      setNextClickPortalsMultiplierBreakpoint(nextClickPortalsMultiplierBreakpoint * 4);
+      setClickPortalsMultiplierCost(Math.round(clickPortalsMultiplierCost * constants.clickPortalsMultiplierCostScaling));
+      setNextClickPortalsMultiplierBreakpoint(nextClickPortalsMultiplierBreakpoint * constants.nextClickPortalsMultiplierBreakpointScaling);
     }
   };
 
@@ -320,7 +341,7 @@ const App = () => {
     if (clicks >= clickSpaceStationCost) {
       setClicks(clicks - clickSpaceStationCost);
       setClickSpaceStations(clickSpaceStations + 1);
-      setClickSpaceStationCost(Math.round(clickSpaceStationCost * 1.25));
+      setClickSpaceStationCost(Math.round(clickSpaceStationCost * constants.clickSpaceStationCostScaling));
     }
   };
 
@@ -328,12 +349,10 @@ const App = () => {
     if (clicks >= clickSpaceStationMultiplierCost && clickSpaceStations >= nextClickSpaceStationMultiplierBreakpoint) {
       setClicks(clicks - clickSpaceStationMultiplierCost);
       setClickSpaceStationMultiplier(clickSpaceStationMultiplier + 1);
-      setClickSpaceStationMultiplierCost(Math.round(clickSpaceStationMultiplierCost * 1.5));
-      setNextClickSpaceStationMultiplierBreakpoint(nextClickSpaceStationMultiplierBreakpoint * 4);
+      setClickSpaceStationMultiplierCost(Math.round(clickSpaceStationMultiplierCost * constants.clickSpaceStationMultiplierCostScaling));
+      setNextClickSpaceStationMultiplierBreakpoint(nextClickSpaceStationMultiplierBreakpoint * constants.nextClickSpaceStationMultiplierBreakpointScaling);
     }
   };
-
-  // Achievements TODO
 
   // User Interface functions
 
@@ -360,7 +379,7 @@ const App = () => {
       <h1>Bedi Clicker</h1>
       <div>clicks: {clicks}</div>
       <div>
-        clicks per sec {(autoClicks * autoClickMultiplier) + (factories * factoriesMultiplier * constants.factoryProduction) + (clickPlants * clickPlantsMultiplier * constants.clickPlantProduction) + (clickPortals * clickPortalsMultiplier * constants.clickPortalProduction) + (clickSpaceStations * clickSpaceStationMultiplier * constants.clickSpaceStationProdcution)}
+        clicks per sec {clicksPerSecond}
       </div>
 
       <br></br>

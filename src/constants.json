@@ -32,5 +32,21 @@
     "factoryProduction": 3,
     "clickPlantProduction": 10,
     "clickPortalProduction": 100,
-    "clickSpaceStationProdcution": 1000
+    "clickSpaceStationProdcution": 1000,
+    "autoClickCostScaling": 1.25,
+    "autoClickCostMultiplierScaling": 1.5,
+    "nextAutoClickMultiplierBreakpointScaling": 4,
+    "factoriesCostScaling": 1.25,
+    "factoriesMultiplierCostScaling": 1.5,
+    "nextFactoriesMultiplierBreakpointScaling": 4,
+    "clickPlantsCostScaling": 1.25,
+    "clickPlantsMultiplierCostScaling": 1.5,
+    "nextClickPlantsMultiplierBreakpointScaling": 4,
+    "clickPortalsCostScaling": 1.25,
+    "clickPortalsMultiplierCostScaling": 1.5,
+    "nextClickPortalsMultiplierBreakpointScaling": 4,
+    "clickSpaceStationCostScaling": 1.25,
+    "clickSpaceStationMultiplierCostScaling": 1.5,
+    "nextClickSpaceStationMultiplierBreakpointScaling": 4,
+    "manualClickUpgradeCostScaling": 10
 }
