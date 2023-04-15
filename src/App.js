@@ -4,6 +4,7 @@ import useInterval from '@use-it/interval';
 import Modal from 'react-modal';
 import constants from './constants.json';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 // TODO:
@@ -375,7 +376,7 @@ const App = () => {
   // JSX
 
   return (
-    <div>
+    <div className='container'>
       <h1>Bedi Clicker</h1>
       <div>clicks: {clicks}</div>
       <div>
@@ -384,75 +385,103 @@ const App = () => {
 
       <br></br>
 
-      <button onClick={handleClick}>Click me</button><br></br>
-      <button onClick={cheatClick}>Dev click</button><br></br>
-      <button onClick={buyAutoClickUpgrade} disabled={clicks < autoClickCost}>Buy auto-click - {autoClicks} | cost: {autoClickCost}</button>
-      <button onClick={buyFactoryUpgrade} disabled={clicks < factoriesCost}>Buy factory - {factories} | cost: {factoriesCost}</button>
-      <button onClick={buyClickPlantUpgrade} disabled={clicks < clickPlantsCost}>Buy click-plant - {clickPlants} | cost: {clickPlantsCost}</button>
-      <button onClick={buyClickPortalUpgrade} disabled={clicks < clickPortalsCost}>Buy click-portal - {clickPortals} | cost: {clickPortalsCost}</button>
-      <button onClick={buyClickSpaceStationUpgrade} disabled={clicks < clickSpaceStationCost}>Buy click space-station - {clickSpaceStations} | cost: {clickSpaceStationCost}</button>
+      <div className="buttons-container">
+        <button className="btn btn-primary" onClick={handleClick}>Click me</button>
+        <button className="btn btn-secondary" onClick={cheatClick}>Dev click</button>
+        <br></br>
+        <div>Auto clicks: {autoClicks}  Multiplier: x{autoClickMultiplier}</div> <div> Next upgrade at {nextAutoClickMultiplierBreakpoint} auto clicks</div>
+        <br></br>
+        <button className="btn btn-info" onClick={buyAutoClickUpgrade} disabled={clicks < autoClickCost}>Buy auto-click | cost: {autoClickCost}</button>
 
-      <br></br>
+        <button
+          className="btn btn-success"
+          onClick={buyAutoClickMultiplier}
+          disabled={autoClicks < nextAutoClickMultiplierBreakpoint || clicks < autoClickMultiplierCost}
+        >
+          Upgrade autoclick multiplier | cost: {autoClickMultiplierCost}
+        </button>
+        <br></br>
+        <p>Click factories: {factories}  Multiplier: x{factoriesMultiplier}</p> <p> Next upgrade at {nextFactoriesMultiplierBreakpoint} factories</p>
+        <br></br>
+        <button className="btn btn-info" onClick={buyFactoryUpgrade} disabled={clicks < factoriesCost}>Buy factory - {factories} | cost: {factoriesCost}</button>
 
-      <button
-        onClick={buyAutoClickMultiplier}
-        disabled={autoClicks < nextAutoClickMultiplierBreakpoint || clicks < autoClickMultiplierCost}
-      >
-        Upgrade autoclick multiplier - {autoClickMultiplier} | cost: {autoClickMultiplierCost}
-      </button>
-      <button
-        onClick={buyFactoryMultiplier}
-        disabled={factories < nextFactoriesMultiplierBreakpoint || clicks < factoriesMultiplierCost}
-      >
-        Upgrade factories multiplier - {factoriesMultiplier} | cost: {factoriesMultiplierCost}
-      </button>
+        <button
+          className="btn btn-success"
+          onClick={buyFactoryMultiplier}
+          disabled={factories < nextFactoriesMultiplierBreakpoint || clicks < factoriesMultiplierCost}
+        >
+          Upgrade factories multiplier - {factoriesMultiplier} | cost: {factoriesMultiplierCost}
+        </button>
+        <br></br>
+        <p>Click plants: {clickPlants}  Multiplier: x{clickPlantsMultiplier}</p> <p>Next upgrade at {nextClickPlantsMultiplierBreakpoint} click plants</p>
+        <br></br>
+        <button className="btn btn-info" onClick={buyClickPlantUpgrade} disabled={clicks < clickPlantsCost}>Buy click-plant - {clickPlants} | cost: {clickPlantsCost}</button>
 
-      <button
-        onClick={buyClickPlantMultiplier}
-        disabled={clickPlants < nextClickPlantsMultiplierBreakpoint || clicks < clickPlantsMultiplierCost}
-      >
-        Upgrade click-plants multiplier - {clickPlantsMultiplier} | cost: {clickPlantsMultiplierCost}
-      </button>
+        <button
+          className="btn btn-success"
+          onClick={buyClickPlantMultiplier}
+          disabled={clickPlants < nextClickPlantsMultiplierBreakpoint || clicks < clickPlantsMultiplierCost}
+        >
+          Upgrade click-plants multiplier - {clickPlantsMultiplier} | cost: {clickPlantsMultiplierCost}
+        </button>
+        <br></br>
+        <p>Auto clicks: {autoClicks}  Multiplier: x{autoClickMultiplier}</p> <p> Next upgrade at {nextAutoClickMultiplierBreakpoint} auto clicks</p>
+        <br></br>
+        <button className="btn btn-info" onClick={buyClickPortalUpgrade} disabled={clicks < clickPortalsCost}>Buy click-portal - {clickPortals} | cost: {clickPortalsCost}</button>
 
-      <button
-        onClick={buyClickPortalMultiplier}
-        disabled={clickPortals < nextClickPortalsMultiplierBreakpoint || clicks < clickPortalsMultiplierCost}
-      >
-        Upgrade click-portals multiplier - {clickPortalsMultiplier} | cost: {clickPortalsMultiplierCost}
-      </button>
+        <button
+          className="btn btn-success"
+          onClick={buyClickPortalMultiplier}
+          disabled={clickPortals < nextClickPortalsMultiplierBreakpoint || clicks < clickPortalsMultiplierCost}
+        >
+          Upgrade click-portals multiplier - {clickPortalsMultiplier} | cost: {clickPortalsMultiplierCost}
+        </button>
+        <br></br>
+        <p>Auto clicks: {clickSpaceStations}  Multiplier: x{clickSpaceStationMultiplier}</p> <p>Next upgrade at {nextClickSpaceStationMultiplierBreakpoint} auto clicks</p>
+        <br></br>
+        
+        <button className="btn btn-info" onClick={buyClickSpaceStationUpgrade} disabled={clicks < clickSpaceStationCost}>Buy click space-station - {clickSpaceStations} | cost: {clickSpaceStationCost}</button>
+        
+        <button
+          className="btn btn-success"
+          onClick={buyClickSpaceStationMultiplier}
+          disabled={clickSpaceStations < nextClickSpaceStationMultiplierBreakpoint || clicks < clickSpaceStationMultiplierCost}
+        >
+          Upgrade click-space-station multiplier - {clickSpaceStationMultiplier} | cost: {clickSpaceStationMultiplierCost}
+        </button>
 
-      <button
-        onClick={buyClickSpaceStationMultiplier}
-        disabled={clickSpaceStations < nextClickSpaceStationMultiplierBreakpoint || clicks < clickSpaceStationMultiplierCost}
-      >
-        Upgrade click-space-station multiplier - {clickSpaceStationMultiplier} | cost: {clickSpaceStationMultiplierCost}
-      </button>
-      <br></br>
-      <button onClick={buyManualClickUpgrade} disabled={clicks < manualClickUpgradeCost}>Manual click value - {manualClickUpgrade * 10 + '%'} | cost: {manualClickUpgradeCost}</button>
+        <br></br>
+        <br></br>
+        <button className="btn btn-warning" onClick={buyManualClickUpgrade} disabled={clicks < manualClickUpgradeCost}>Manual click value - {manualClickUpgrade * 10 + '%'} | cost: {manualClickUpgradeCost}</button>
+        <br></br>
+        <br></br>
+        <button className="btn btn-danger" onClick={quickReset}>dev reset</button>
+        <button className="btn btn-danger" onClick={openResetModal}>Hard Reset</button>
 
-      <br></br><br></br>
-      <button onClick={quickReset}>dev reset</button>
-      <button onClick={openResetModal}>Hard Reset</button>
+      </div>
+
       <Modal
         isOpen={showResetModal}
         onRequestClose={closeResetModal}
         contentLabel="Hard Reset Modal"
       >
+        <div className="modal-content">
         <h2>Are you sure you want to hard reset?</h2>
-        <button onClick={confirmHardReset}>Yes, hard reset</button>
-        <button onClick={closeResetModal}>No, go back</button>
+        <button className="btn btn-danger" onClick={confirmHardReset}>Yes, hard reset</button>
+        <button className="btn btn-secondary" onClick={closeResetModal}>No, go back</button>
+        </div>
       </Modal>
 
       <br></br><br></br>
 
       <div>
-        <button onClick={() => setShowStats(!showStats)}>
+        <button className="btn btn-secondary stats-button" onClick={() => setShowStats(!showStats)}>
           {showStats ? 'Hide Statistics' : 'Show Statistics'}
         </button>
         {showStats && (
-          <div>
+          <div className="statistics">
             <h2>Statistics</h2>
-            <div>Total historical clicks: {totalClicks}</div>
+            <div>Total online clicks: {totalClicks}</div>
             <div>Total manual clicks: {totalManualClicks}</div>
             <div>Manual click value: {1 + calculateManualClickValue()}</div>
             <br></br>
